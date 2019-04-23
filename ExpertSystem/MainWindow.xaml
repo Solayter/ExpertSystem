@@ -5,8 +5,33 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ExpertSystem"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="234" Width="296">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10">Удобрения (0 - 100)</TextBlock>
+        <TextBox Grid.Row="0" Grid.Column="1" Name="tb1" Margin="10"/>
+
+        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10">Температура (5 - 30)</TextBlock>
+        <TextBox Grid.Row="1" Grid.Column="1" Name="tb2" Margin="10"/>
+
+        <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10">Магия</TextBlock>
+        <CheckBox Grid.Row="2" Grid.Column="1" Name="checkBox" Margin="10"/>
+
+        <Button Grid.Row="3" Grid.Column="1" Name="btn1" Margin="10" Click="Btn1_Click" >Расчет</Button>
+
+        <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10">Урожайность (0 - 100)</TextBlock>
+        <TextBox Grid.Row="4" Grid.Column="1" Name="tb3" Margin="10"/>
     </Grid>
 </Window>

@@ -35,6 +35,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AForge, Version=2.2.5.0, Culture=neutral, PublicKeyToken=c1db6ff4eaa06aeb, processorArchitecture=MSIL">
+      <HintPath>..\packages\portable.aforge.core.2.2.5.60302\lib\net45\AForge.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Fuzzy, Version=2.2.5.0, Culture=neutral, PublicKeyToken=cb12670d0eae17c9, processorArchitecture=MSIL">
+      <HintPath>..\packages\portable.aforge.fuzzy.2.2.5.60302\lib\portable-net45+netcore45+wpa81\AForge.Fuzzy.dll</HintPath>
+    </Reference>
+    <Reference Include="Shim, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c55ec16d10c4b366, processorArchitecture=MSIL">
+      <HintPath>..\packages\shim.2.0.0\lib\net40\Shim.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -63,6 +72,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Logic.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -86,6 +96,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
