@@ -1,0 +1,57 @@
+﻿<Window x:Class="ExpertSystem.WindowAddVar"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ExpertSystem"
+        mc:Ignorable="d"
+        Title="Добавление переменной" Height="500" Width="700" FontSize="14">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            
+        </Grid.ColumnDefinitions>
+
+        <Button x:Name="btnSave" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="15,15,15,15" >Сохранить</Button>
+        <Button x:Name="btnCancel" Grid.Row="8" Grid.Column="3" Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="15,15,15,15" >Отменить</Button>
+        
+        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5">Название:</TextBlock>
+        <TextBlock Name="textBlockVariableName" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="5">-</TextBlock>
+
+        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5">Минимум:</TextBlock>
+        <TextBlock Name="textBlockVariableMin" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="5">-</TextBlock>
+
+        <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5">Максимум:</TextBlock>
+        <TextBlock Name="textBlockVariableMax" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="5">-</TextBlock>
+
+        <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5">Термы:</TextBlock>
+        <ListView x:Name="listFuzzyLabels" BorderBrush="Black"  Grid.Column="3" Grid.Row="3" Grid.RowSpan="5" Grid.ColumnSpan="2" Margin="15,10,15,10" />
+
+        <TextBlock Grid.Row="3" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5">Название:</TextBlock>
+        <TextBlock Grid.Row="4" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5">Тип:</TextBlock>
+        <TextBlock Grid.Row="5" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5">Значения:</TextBlock>
+        <TextBlock Name="textBlockLabelName" Grid.Row="3" Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="5">-</TextBlock>
+        <TextBlock Name="textBlockLabelType" Grid.Row="4" Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="5">-</TextBlock>
+        <ListView x:Name="listLabelsItems" BorderBrush="Black"  Grid.Column="6" Grid.Row="5" Grid.RowSpan="3" Grid.ColumnSpan="1" Margin="15,10,15,10"/>
+
+    </Grid>
+</Window>

@@ -4,76 +4,134 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AForge.Fuzzy;
+using Newtonsoft.Json;
 
 namespace ExpertSystem
 {
     public class Logic
     {
-        
-        
-        
+        private InformationBase informationBase;
+        private DatabaseCreator databaseCreator;
+        private InferenceSystem inferenceSystem;
         public Logic()
         {
-            // create the linguistic labels (fuzzy sets) that compose the temperature 
-            TrapezoidalFunction function1 = new TrapezoidalFunction(
-                10, 15, TrapezoidalFunction.EdgeType.Right);
-            FuzzySet fsCold = new FuzzySet("Cold", function1);
-            TrapezoidalFunction function2 = new TrapezoidalFunction(10, 15, 20, 25);
-            FuzzySet fsCool = new FuzzySet("Cool", function2);
-            TrapezoidalFunction function3 = new TrapezoidalFunction(20, 25, 30, 35);
-            FuzzySet fsWarm = new FuzzySet("Warm", function3);
-            TrapezoidalFunction function4 = new TrapezoidalFunction(
-                30, 35, TrapezoidalFunction.EdgeType.Left);
-            FuzzySet fsHot = new FuzzySet("Hot", function4);
+            informationBase = new InformationBase();
+            databaseCreator = new DatabaseCreator();
+            AddTestData();
+            inferenceSystem = databaseCreator.Create(informationBase);
+        }
 
-            // create a linguistic variable to represent steel temperature
-            LinguisticVariable lvSteel = new LinguisticVariable("Steel", 0, 80);
-            // adding labels to the variable
-            lvSteel.AddLabel(fsCold);
-            lvSteel.AddLabel(fsCool);
-            lvSteel.AddLabel(fsWarm);
-            lvSteel.AddLabel(fsHot);
+        public string Calc(float f1, float f2, float f3)
+        {
+            inferenceSystem.SetInput("Сорт", f1);
+            inferenceSystem.SetInput("Удобрений", f2);
+            inferenceSystem.SetInput("Осадков", f3);
+            return inferenceSystem.Evaluate("Урожайность").ToString();
+        }
+        public string Calc2(float f1, float f2, float f3)
+        {
+            inferenceSystem.SetInput("Возраст", f1);
+            inferenceSystem.SetInput("Стенокардия", f2);
+            inferenceSystem.SetInput("Пол", f3);
+            return inferenceSystem.Evaluate("Вероятность_ИБС").ToString();
+        }
 
-            // create a linguistic variable to represent stove temperature
-            LinguisticVariable lvStove = new LinguisticVariable("Stove", 0, 80);
-            // adding labels to the variable
-            lvStove.AddLabel(fsCold);
-            lvStove.AddLabel(fsCool);
-            lvStove.AddLabel(fsWarm);
-            lvStove.AddLabel(fsHot);
 
-            // create the linguistic labels (fuzzy sets) that compose the pressure
-            TrapezoidalFunction function5 = new TrapezoidalFunction(
-                20, 40, TrapezoidalFunction.EdgeType.Right);
-            FuzzySet fsLow = new FuzzySet("Low", function5);
-            TrapezoidalFunction function6 = new TrapezoidalFunction(20, 40, 60, 80);
-            FuzzySet fsMedium = new FuzzySet("Medium", function6);
-            TrapezoidalFunction function7 = new TrapezoidalFunction(
-                60, 80, TrapezoidalFunction.EdgeType.Left);
-            FuzzySet fsHigh = new FuzzySet("High", function7);
-            // create a linguistic variable to represent pressure
-            LinguisticVariable lvPressure = new LinguisticVariable("Pressure", 0, 100);
-            // adding labels to the variable
-            lvPressure.AddLabel(fsLow);
-            lvPressure.AddLabel(fsMedium);
-            lvPressure.AddLabel(fsHigh);
+        public string[] GetVariablesList()
+        {
+            return informationBase.GetVariablesList();
+        }
 
-            // create a linguistic variable database
-            Database db = new Database();
-            db.AddVariable(lvSteel);
-            db.AddVariable(lvStove);
-            db.AddVariable(lvPressure);
+        public Variable GetVariable(string name)
+        {
+            return informationBase.GetVariable(name);
+        }
 
-            // sample rules just to test the expression parsing
-            Rule r1 = new Rule(db, "Test1", "IF Steel is not Cold and Stove is Hot then Pressure is Low");
-            Rule r2 = new Rule(db, "Test2", "IF Steel is Cold and not (Stove is Warm or Stove is Hot) then Pressure is Medium");
-            Rule r3 = new Rule(db, "Test3", "IF Steel is Cold and Stove is Warm or Stove is Hot then Pressure is High");
+        public string[] GetRulesList()
+        {
+            return informationBase.GetRulesList();
+        }
 
-            // testing the firing strength
-            lvSteel.NumericInput = 12;
-            lvStove.NumericInput = 35;
-            float result = r1.EvaluateFiringStrength();
-            Console.WriteLine(result.ToString());
+        public Rule GetRule(string name)
+        {
+            return informationBase.GetRule(name);
+        }
+
+        public void AddTestData()
+        {
+            informationBase.AddVariable("Сорт", 1, 3, new FuzzyLabel[] { new FuzzyLabel("Первый", 5, new float[] { 1 }), new FuzzyLabel("Второй", 5, new float[] { 2 }), new FuzzyLabel("Третий", 5, new float[] { 3 }) });
+            informationBase.AddVariable("Удобрений", 0, 100, new FuzzyLabel[] { new FuzzyLabel("Мало", 1, new float[] { 0, 100 }), new FuzzyLabel("Много", 2, new float[] { 0, 100 }) });
+            informationBase.AddVariable("Осадков", 0, 50, new FuzzyLabel[] { new FuzzyLabel("Мало", 1, new float[] { 0, 50 }), new FuzzyLabel("Много", 2, new float[] { 0, 50 }) });
+            informationBase.AddVariable("Урожайность", 100, 300, new FuzzyLabel[] { new FuzzyLabel("Низкая", 1, new float[] { 100, 300 }), new FuzzyLabel("Средняя", 3, new float[] { 100, 200, 300 }), new FuzzyLabel("Высокая", 2, new float[] { 100, 300 }) });
+
+
+            informationBase.AddRule("Правило 1", "IF Сорт IS Первый AND Удобрений IS Много AND Осадков IS Много THEN Урожайность IS Высокая");
+            informationBase.AddRule("Правило 2", "IF Сорт IS Первый AND Удобрений IS Много AND Осадков IS Мало THEN Урожайность IS Средняя");
+            informationBase.AddRule("Правило 3", "IF Сорт IS Второй AND Удобрений IS Много AND Осадков IS Много THEN Урожайность IS Низкая");
+            informationBase.AddRule("Правило 4", "IF Сорт IS Второй AND Удобрений IS Мало AND Осадков IS Мало THEN Урожайность IS Средняя");
+            informationBase.AddRule("Правило 5", "IF Сорт IS Третий AND Удобрений IS Мало AND Осадков IS Мало THEN Урожайность IS Высокая");
+
+            informationBase.AddVariable("Возраст", 29, 70, new FuzzyLabel[] {
+                new FuzzyLabel("30-39", 3, new float[] { 29, 35, 40}),
+                new FuzzyLabel("40-49", 3, new float[] { 39, 45, 50}),
+                new FuzzyLabel("50-59", 3, new float[] { 49, 55, 60}),
+                new FuzzyLabel("60-69", 3, new float[] { 59, 65, 70}) });
+
+
+            informationBase.AddVariable("Стенокардия", 1, 4, new FuzzyLabel[] {
+                new FuzzyLabel("Типичная_стенокардия", 5, new float[] { 1 }),
+                new FuzzyLabel("Атипичная_стенокардия", 5, new float[] { 2 }),
+                new FuzzyLabel("Нестенокардическая_боль", 5, new float[] { 3 }),
+                new FuzzyLabel("Нет_боли", 5, new float[] { 4 }) });
+
+            informationBase.AddVariable("Пол", 1, 2, new FuzzyLabel[] {
+                new FuzzyLabel("Мужской", 5, new float[] { 1 }),
+                new FuzzyLabel("Женский", 5, new float[] { 2 }) });
+            
+            informationBase.AddVariable("Вероятность_ИБС", 0, 100, new FuzzyLabel[] {
+                new FuzzyLabel("Очень_низкая", 1, new float[] { 0, 5}),
+                new FuzzyLabel("Низкая", 3, new float[] { 5, 7.5f, 10}),
+                new FuzzyLabel("Средняя", 3, new float[] { 10, 50, 90}),
+                new FuzzyLabel("Высокая", 2, new float[] { 90, 100}) });
+
+            informationBase.AddRule("Правило 6", "IF Возраст IS 30-39 AND Стенокардия IS Типичная_стенокардия AND Пол IS Мужской THEN Вероятность_ИБС IS Средняя");
+            informationBase.AddRule("Правило 35", "IF Возраст IS 30-39 AND Стенокардия IS Типичная_стенокардия AND Пол IS Женский THEN Вероятность_ИБС IS Средняя");
+            informationBase.AddRule("Правило 7", "IF Возраст IS 30-39 AND Стенокардия IS Атипичная_стенокардия AND Пол IS Мужской THEN Вероятность_ИБС IS Средняя");
+            informationBase.AddRule("Правило 8", "IF Возраст IS 30-39 AND Стенокардия IS Атипичная_стенокардия AND Пол IS Женский THEN Вероятность_ИБС IS Очень_низкая");
+            informationBase.AddRule("Правило 9", "IF Возраст IS 30-39 AND Стенокардия IS Нестенокардическая_боль AND Пол IS Мужской THEN Вероятность_ИБС IS Низкая");
+            informationBase.AddRule("Правило 10", "IF Возраст IS 30-39 AND Стенокардия IS Нестенокардическая_боль AND Пол IS Женский THEN Вероятность_ИБС IS Очень_низкая");
+            informationBase.AddRule("Правило 11", "IF Возраст IS 30-39 AND Стенокардия IS Нет_боли AND Пол IS Мужской THEN Вероятность_ИБС IS Очень_низкая");
+            informationBase.AddRule("Правило 40", "IF Возраст IS 30-39 AND Стенокардия IS Нет_боли AND Пол IS Женский THEN Вероятность_ИБС IS Очень_низкая");
+            informationBase.AddRule("Правило 12", "IF Возраст IS 40-49 AND Стенокардия IS Типичная_стенокардия AND Пол IS Мужской THEN Вероятность_ИБС IS Высокая");
+            informationBase.AddRule("Правило 30", "IF Возраст IS 40-49 AND Стенокардия IS Типичная_стенокардия AND Пол IS Женский THEN Вероятность_ИБС IS Средняя");
+            informationBase.AddRule("Правило 13", "IF Возраст IS 40-49 AND Стенокардия IS Атипичная_стенокардия AND Пол IS Мужской THEN Вероятность_ИБС IS Средняя");
+            informationBase.AddRule("Правило 14", "IF Возраст IS 40-49 AND Стенокардия IS Атипичная_стенокардия AND Пол IS Женский THEN Вероятность_ИБС IS Низкая");
+            informationBase.AddRule("Правило 15", "IF Возраст IS 40-49 AND Стенокардия IS Нестенокардическая_боль AND Пол IS Мужской THEN Вероятность_ИБС IS Средняя");
+            informationBase.AddRule("Правило 16", "IF Возраст IS 40-49 AND Стенокардия IS Нестенокардическая_боль AND Пол IS Женский THEN Вероятность_ИБС IS Очень_низкая");
+            informationBase.AddRule("Правило 17", "IF Возраст IS 40-49 AND Стенокардия IS Нет_боли AND Пол IS Мужской THEN Вероятность_ИБС IS Низкая");
+            informationBase.AddRule("Правило 31", "IF Возраст IS 40-49 AND Стенокардия IS Нет_боли AND Пол IS Женский THEN Вероятность_ИБС IS Очень_низкая");
+            informationBase.AddRule("Правило 18", "IF Возраст IS 50-59 AND Стенокардия IS Типичная_стенокардия AND Пол IS Мужской THEN Вероятность_ИБС IS Высокая");
+            informationBase.AddRule("Правило 32", "IF Возраст IS 50-59 AND Стенокардия IS Типичная_стенокардия AND Пол IS Женский THEN Вероятность_ИБС IS Средняя");
+            informationBase.AddRule("Правило 19", "IF Возраст IS 50-59 AND Стенокардия IS Атипичная_стенокардия AND Пол IS Мужской THEN Вероятность_ИБС IS Средняя");
+            informationBase.AddRule("Правило 20", "IF Возраст IS 50-59 AND Стенокардия IS Атипичная_стенокардия AND Пол IS Женский THEN Вероятность_ИБС IS Средняя");
+            informationBase.AddRule("Правило 21", "IF Возраст IS 50-59 AND Стенокардия IS Нестенокардическая_боль AND Пол IS Мужской THEN Вероятность_ИБС IS Средняя");
+            informationBase.AddRule("Правило 22", "IF Возраст IS 50-59 AND Стенокардия IS Нестенокардическая_боль AND Пол IS Женский THEN Вероятность_ИБС IS Низкая");
+            informationBase.AddRule("Правило 23", "IF Возраст IS 50-59 AND Стенокардия IS Нет_боли AND Пол IS Мужской THEN Вероятность_ИБС IS Низкая");
+            informationBase.AddRule("Правило 33", "IF Возраст IS 50-59 AND Стенокардия IS Нет_боли AND Пол IS Женский THEN Вероятность_ИБС IS Очень_низкая");
+            informationBase.AddRule("Правило 24", "IF Возраст IS 60-69 AND Стенокардия IS Типичная_стенокардия AND Пол IS Мужской THEN Вероятность_ИБС IS Высокая");
+            informationBase.AddRule("Правило 36", "IF Возраст IS 60-69 AND Стенокардия IS Типичная_стенокардия AND Пол IS Женский THEN Вероятность_ИБС IS Высокая");
+            informationBase.AddRule("Правило 25", "IF Возраст IS 60-69 AND Стенокардия IS Атипичная_стенокардия AND Пол IS Мужской THEN Вероятность_ИБС IS Средняя");
+            informationBase.AddRule("Правило 37", "IF Возраст IS 60-69 AND Стенокардия IS Атипичная_стенокардия AND  Пол IS Женский THEN Вероятность_ИБС IS Средняя");
+            informationBase.AddRule("Правило 27", "IF Возраст IS 60-69 AND Стенокардия IS Нестенокардическая_боль AND Пол IS Мужской THEN Вероятность_ИБС IS Средняя");
+            informationBase.AddRule("Правило 38", "IF Возраст IS 60-69 AND Стенокардия IS Нестенокардическая_боль AND Пол IS Женский THEN Вероятность_ИБС IS Средняя");
+            informationBase.AddRule("Правило 29", "IF Возраст IS 60-69 AND Стенокардия IS Нет_боли AND Пол IS Мужской THEN Вероятность_ИБС IS Низкая");
+            informationBase.AddRule("Правило 39", "IF Возраст IS 60-69 AND Стенокардия IS Нет_боли AND Пол IS Женский THEN Вероятность_ИБС IS Низкая");
+
+
+
+
+            string sas = JsonConvert.SerializeObject(informationBase);
+            InformationBase if2 = JsonConvert.DeserializeObject<InformationBase>(sas);
         }
     }
 }
