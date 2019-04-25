@@ -70,6 +70,7 @@ namespace ExpertSystem
             informationBase.AddRule("Правило 3", "IF Сорт IS Второй AND Удобрений IS Много AND Осадков IS Много THEN Урожайность IS Низкая");
             informationBase.AddRule("Правило 4", "IF Сорт IS Второй AND Удобрений IS Мало AND Осадков IS Мало THEN Урожайность IS Средняя");
             informationBase.AddRule("Правило 5", "IF Сорт IS Третий AND Удобрений IS Мало AND Осадков IS Мало THEN Урожайность IS Высокая");
+            informationBase.AddRule("Правило 0", "IF Сорт IS Первый AND Удобрений IS Мало AND Осадков IS Мало THEN Урожайность IS Низкая");
 
             informationBase.AddVariable("Возраст", 29, 70, new FuzzyLabel[] {
                 new FuzzyLabel("30-39", 3, new float[] { 29, 35, 40}),

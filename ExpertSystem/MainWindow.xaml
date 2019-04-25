@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ExpertSystem"
         mc:Ignorable="d"
-        Title="Экспертная система" Height="600" Width="100" MinHeight="540" MinWidth="960" FontSize="14">
+        Title="Экспертная система" Height="600" Width="960" MinHeight="600" MinWidth="960" FontSize="14">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -22,37 +22,6 @@
 
         </Menu>
         <TabControl Grid.Row="1" HorizontalAlignment="Left" Height="549" Margin="0,20                     ,0,0" VerticalAlignment="Top" Width="952" >
-            <TabItem Header="Тест">
-                <Grid Grid.ShowGridLines="True">
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10">Удобрения (0 - 100)</TextBlock>
-                    <TextBox Grid.Row="0" Grid.Column="1" Name="tb1" Margin="10"/>
-
-                    <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10">Температура (5 - 30)</TextBlock>
-                    <TextBox Grid.Row="1" Grid.Column="1" Name="tb2" Margin="10"/>
-
-                    <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10">Магия</TextBlock>
-                    <CheckBox Grid.Row="2" Grid.Column="1" Name="checkBox" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-
-                    <Button Grid.Row="3" Grid.Column="1" Name="btn1" Margin="10" Click="Btn1_Click" >Расчет</Button>
-
-                    <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10">Урожайность (0 - 100)</TextBlock>
-                    <TextBox Grid.Row="4" Grid.Column="1" Name="tb3" Margin="10"/>
-
-                </Grid>
-            </TabItem>
             <TabItem Header="Переменные">
                 <Grid >
                     <Grid.RowDefinitions>
@@ -88,8 +57,8 @@
 
 
                     <Button x:Name="btnAddVariable" Grid.Row="13" Grid.Column="0" Grid.ColumnSpan="2" Margin="15,0,15,10" Click="BtnAddVariable_Click">Добавить переменную</Button>
-                    <Button x:Name="btnUpdateVariable" Grid.Row="13" Grid.Column="3" Grid.ColumnSpan="2" Margin="15,0,15,10" Click="BtnAddVariable_Click">Изменить переменную</Button>
-                    <Button x:Name="btnDeleteVariable" Grid.Row="13" Grid.Column="6" Grid.ColumnSpan="2" Margin="15,0,15,10" Click="BtnAddVariable_Click">Удалить переменную</Button>
+                    <Button x:Name="btnUpdateVariable" Grid.Row="13" Grid.Column="3" Grid.ColumnSpan="2" Margin="15,0,15,10">Изменить переменную</Button>
+                    <Button x:Name="btnDeleteVariable" Grid.Row="13" Grid.Column="6" Grid.ColumnSpan="2" Margin="15,0,15,10">Удалить переменную</Button>
 
                     <TextBlock Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5">Название:</TextBlock>
                     <TextBlock Name="textBlockVariableName" Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="5">-</TextBlock>

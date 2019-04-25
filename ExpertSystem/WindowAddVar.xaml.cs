@@ -19,9 +19,44 @@ namespace ExpertSystem
     /// </summary>
     public partial class WindowAddVar : Window
     {
+        public string name;
+        public float min;
+        public float max;
+        public bool ok;
+        public FuzzyLabel[] fuzzyLabels;
         public WindowAddVar()
         {
             InitializeComponent();
+            ok = false;
+        }
+
+        private void BtnSave_Click(object sender, RoutedEventArgs e)
+        {
+            name = textBoxVariableName.Text;
+            try
+            {
+                min = (float)Convert.ToDouble(textBoxVariableMin.Text);
+            }
+            catch
+            {
+                MessageBox.Show("В поле Минимум можно вводить только целые и дробные числа!");
+            }
+
+            try
+            {
+                max = (float)Convert.ToDouble(textBoxVariableMax.Text);
+            }
+            catch
+            {
+                MessageBox.Show("В поле Максимум можно вводить только целые и дробные числа!");
+            }
+            ok = true;
+            Close();
+        }
+
+        private void BtnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }
