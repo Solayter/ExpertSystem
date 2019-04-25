@@ -18,6 +18,10 @@ namespace ExpertSystem
             Type = type;
             Numbers = numbers;
         }
+        override public string ToString()
+        {
+            return Name;
+        }
     }
     
 }

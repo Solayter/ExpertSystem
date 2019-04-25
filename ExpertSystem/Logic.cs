@@ -18,11 +18,12 @@ namespace ExpertSystem
             informationBase = new InformationBase();
             databaseCreator = new DatabaseCreator();
             AddTestData();
-            inferenceSystem = databaseCreator.Create(informationBase);
+            
         }
 
         public string Calc(float f1, float f2, float f3)
         {
+            inferenceSystem = databaseCreator.Create(informationBase);
             inferenceSystem.SetInput("Сорт", f1);
             inferenceSystem.SetInput("Удобрений", f2);
             inferenceSystem.SetInput("Осадков", f3);
@@ -30,12 +31,21 @@ namespace ExpertSystem
         }
         public string Calc2(float f1, float f2, float f3)
         {
+            inferenceSystem = databaseCreator.Create(informationBase);
             inferenceSystem.SetInput("Возраст", f1);
             inferenceSystem.SetInput("Стенокардия", f2);
             inferenceSystem.SetInput("Пол", f3);
             return inferenceSystem.Evaluate("Вероятность_ИБС").ToString();
         }
+        public void AddVariable(string name, float min, float max, FuzzyLabel[] fuzzyLabels)
+        {
+            informationBase.AddVariable(name, min, max, fuzzyLabels);
+        }
 
+        public void DeleteVariable(string name)
+        {
+            informationBase.DeleteVariable(name);
+        }
 
         public string[] GetVariablesList()
         {
@@ -47,6 +57,16 @@ namespace ExpertSystem
             return informationBase.GetVariable(name);
         }
 
+        public void AddRule(string name, string value)
+        {
+            informationBase.AddRule(name, value);
+        }
+
+        public void DeleteRule(string name)
+        {
+            informationBase.DeleteRule(name);
+        }
+
         public string[] GetRulesList()
         {
             return informationBase.GetRulesList();
@@ -56,6 +76,8 @@ namespace ExpertSystem
         {
             return informationBase.GetRule(name);
         }
+
+
 
         public void AddTestData()
         {

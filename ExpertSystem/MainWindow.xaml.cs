@@ -24,6 +24,7 @@ namespace ExpertSystem
         Logic logics;
         Variable selectedVar;
         Rule selectedRule;
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -32,41 +33,42 @@ namespace ExpertSystem
             listRules.ItemsSource = logics.GetRulesList();
         }
 
-        
+
         private void BtnAddVariable_Click(object sender, RoutedEventArgs e)
         {
-            WindowAddVar windowAddVar = new WindowAddVar();
+            WindowAddVar windowAddVar = new WindowAddVar(logics.GetVariablesList());
             if (windowAddVar.ShowDialog() != true)
             {
                 if (windowAddVar.ok)
                 {
-                    string name = windowAddVar.name;
-                    float min = windowAddVar.min;
-                    float max = windowAddVar.max;
-                    listVariables.Items.Add(name);
+                    logics.AddVariable(windowAddVar.name, windowAddVar.min, windowAddVar.max, windowAddVar.fuzzyLabels.ToArray());
+                    listVariables.ItemsSource = logics.GetVariablesList();
                 }
             }
         }
 
         private void ListVariables_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            selectedVar = logics.GetVariable(listVariables.SelectedItem.ToString());
-            
-            if (selectedVar != null)
+            if (listVariables.SelectedItem != null)
             {
-                textBlockVariableName.Text = selectedVar.Name;
-                textBlockVariableMin.Text = selectedVar.Min.ToString();
-                textBlockVariableMax.Text = selectedVar.Max.ToString();
-                listFuzzyLabels.ItemsSource = selectedVar.GetLabelsList();
+                selectedVar = logics.GetVariable(listVariables.SelectedItem.ToString());
+
+                if (selectedVar != null)
+                {
+                    textBlockVariableName.Text = selectedVar.Name;
+                    textBlockVariableMin.Text = selectedVar.Min.ToString();
+                    textBlockVariableMax.Text = selectedVar.Max.ToString();
+                    listFuzzyLabels.ItemsSource = selectedVar.GetLabelsList();
+                }
             }
         }
 
         private void ListFuzzyLabels_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if ((selectedVar != null)&(listFuzzyLabels.SelectedItem != null))
+            if ((selectedVar != null) & (listFuzzyLabels.SelectedItem != null))
             {
                 FuzzyLabel selectedLabel = selectedVar.GetFuzzyLabel(listFuzzyLabels.SelectedItem.ToString());
-                if(selectedLabel != null)
+                if (selectedLabel != null)
                 {
                     textBlockLabelName.Text = selectedLabel.Name;
                     switch (selectedLabel.Type)
@@ -96,7 +98,7 @@ namespace ExpertSystem
 
         private void BtnAddRule_Click(object sender, RoutedEventArgs e)
         {
-            
+
         }
 
         private void ListRules_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -105,8 +107,6 @@ namespace ExpertSystem
             textBlockRuleValue.TextWrapping = TextWrapping.Wrap;
             textBlockRuleValue.Text = selectedRule.Value;
             textBlockRuleName.Text = selectedRule.Name;
-
-
         }
 
         private void BtnCalc_Click(object sender, RoutedEventArgs e)
@@ -117,6 +117,33 @@ namespace ExpertSystem
         private void BtnCalc1_Click(object sender, RoutedEventArgs e)
         {
             textBlockOutput1.Text = logics.Calc2(Convert.ToInt32(textBoxInput11.Text), Convert.ToInt32(textBoxInput22.Text), Convert.ToInt32(textBoxInput33.Text));
+        }
+
+        private void BtnDeleteVariable_Click(object sender, RoutedEventArgs e)
+        {
+            if (listVariables.SelectedIndex != -1)
+                if (MessageBox.Show("Вы уверены что хотите удалить переменную " + listVariables.SelectedItem.ToString() + "?", "Удаление переменной", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    logics.DeleteVariable(listVariables.SelectedItem.ToString());
+                    listVariables.ItemsSource = logics.GetVariablesList();
+                }
+        }
+
+        private void BtnUpdateVariable_Click(object sender, RoutedEventArgs e)
+        {
+            WindowAddVar windowAddVar = new WindowAddVar(logics.GetVariablesList(), selectedVar.Name, selectedVar.Min, selectedVar.Max, selectedVar.FuzzyLabels);
+            if (windowAddVar.ShowDialog() != true)
+            {
+                if (windowAddVar.ok)
+                {
+                    if (MessageBox.Show("Вы уверены что хотите изменить переменную " + listVariables.SelectedItem.ToString() + "?", "Изменение переменной", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    {
+                        logics.DeleteVariable(listVariables.SelectedItem.ToString());
+                        logics.AddVariable(windowAddVar.name, windowAddVar.min, windowAddVar.max, windowAddVar.fuzzyLabels.ToArray());
+                        listVariables.ItemsSource = logics.GetVariablesList();
+                    }
+                }
+            }
         }
     }
 }

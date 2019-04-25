@@ -59,6 +59,33 @@ namespace ExpertSystem
             return null;
         }
 
+        public void DeleteVariable(string name)
+        {
+            for (int i = 0; i < variables.Length; i++)
+            {
+                if (variables[i].Name == name)
+                {
+                    variables[i] = null;
+                    break;
+                }
+            }
+            variables = variables.Where(x => x != null).ToArray();
+            Array.Resize(ref variables, variables.Length + 1);
+        }
+
+        public void DeleteRule(string name)
+        {
+            for (int i = 0; i < rules.Length; i++)
+            {
+                if (rules[i].Name == name)
+                {
+                    rules[i] = null;
+                    break;
+                }
+            }
+            rules = rules.Where(x => x != null).ToArray();
+            Array.Resize(ref rules, rules.Length + 1);
+        }
 
     }
 }

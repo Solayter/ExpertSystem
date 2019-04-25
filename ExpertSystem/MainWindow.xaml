@@ -5,15 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ExpertSystem"
         mc:Ignorable="d"
-        Title="Экспертная система" Height="600" Width="960" MinHeight="600" MinWidth="960" FontSize="14">
+        Title="Экспертная система" Height="600" Width="960" MinHeight="600" MinWidth="960" FontSize="14" Background="#FF404040">
 
-    <Grid>
+    <Grid Background="#FFA0A0A0">
         <Grid.RowDefinitions>
             <RowDefinition Height="0*"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Menu VerticalAlignment="Top" Grid.Row="0" Height="20
-              " Grid.RowSpan="2" FontSize="14">
+              " Grid.RowSpan="2" FontSize="14" Background="#FF838383">
             <MenuItem Header="Файл">
                 <MenuItem Header="Открыть" ></MenuItem>
                 <MenuItem Header="Сохранить" ></MenuItem>
@@ -21,8 +21,14 @@
             </MenuItem>
 
         </Menu>
-        <TabControl Grid.Row="1" HorizontalAlignment="Left" Height="549" Margin="0,20                     ,0,0" VerticalAlignment="Top" Width="952" >
+        <TabControl Grid.Row="1" HorizontalAlignment="Left" Height="549" Margin="0,20,0,0" VerticalAlignment="Top" Width="952" Background="#FFCBCBCB" >
             <TabItem Header="Переменные">
+                <TabItem.Background>
+                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                        <GradientStop Color="#FFF0F0F0" Offset="0"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
                 <Grid >
                     <Grid.RowDefinitions>
                         <RowDefinition/>
@@ -57,8 +63,8 @@
 
 
                     <Button x:Name="btnAddVariable" Grid.Row="13" Grid.Column="0" Grid.ColumnSpan="2" Margin="15,0,15,10" Click="BtnAddVariable_Click">Добавить переменную</Button>
-                    <Button x:Name="btnUpdateVariable" Grid.Row="13" Grid.Column="3" Grid.ColumnSpan="2" Margin="15,0,15,10">Изменить переменную</Button>
-                    <Button x:Name="btnDeleteVariable" Grid.Row="13" Grid.Column="6" Grid.ColumnSpan="2" Margin="15,0,15,10">Удалить переменную</Button>
+                    <Button x:Name="btnUpdateVariable" Grid.Row="13" Grid.Column="3" Grid.ColumnSpan="2" Margin="15,0,15,10" Click="BtnUpdateVariable_Click">Изменить переменную</Button>
+                    <Button x:Name="btnDeleteVariable" Grid.Row="13" Grid.Column="6" Grid.ColumnSpan="2" Margin="15,0,15,10" Click="BtnDeleteVariable_Click">Удалить переменную</Button>
 
                     <TextBlock Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5">Название:</TextBlock>
                     <TextBlock Name="textBlockVariableName" Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="5">-</TextBlock>

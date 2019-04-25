@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ExpertSystem"
         mc:Ignorable="d"
-        Title="Добавление переменной" Height="500" Width="700" FontSize="14">
+        Title="Добавление переменной" Height="500" Width="700" FontSize="14" Background="#FFCBCBCB">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -32,8 +32,8 @@
         <Button x:Name="btnSave" Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="15,15,15,15" Click="BtnSave_Click" >Сохранить</Button>
         <Button x:Name="btnCancel" Grid.Row="9" Grid.Column="3" Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="15,15,15,15" Click="BtnCancel_Click" >Отменить</Button>
 
-        <Button x:Name="btnNewLabel" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="1" Grid.RowSpan="1" Margin="15,5,15,5" >Добавить</Button>
-        <Button x:Name="btnDeleteLabel" Grid.Row="7" Grid.Column="2" Grid.ColumnSpan="1" Grid.RowSpan="1" Margin="15,5,15,5" >Удалить</Button>
+        <Button x:Name="btnNewLabel" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="1" Grid.RowSpan="1" Margin="15,5,15,5" Click="BtnNewLabel_Click" >Добавить</Button>
+        <Button x:Name="btnDeleteLabel" Grid.Row="7" Grid.Column="2" Grid.ColumnSpan="1" Grid.RowSpan="1" Margin="15,5,15,5" Click="BtnDeleteLabel_Click" >Удалить</Button>
 
 
         <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5">Название:</TextBlock>
@@ -46,7 +46,7 @@
         <TextBox Name="textBoxVariableMax" Width="190" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="5">1</TextBox>
 
         <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5">Термы:</TextBlock>
-        <ListView x:Name="listFuzzyLabels" BorderBrush="Black"  Grid.Column="1" Grid.Row="3" Grid.RowSpan="4" Grid.ColumnSpan="2" Margin="15,10,15,10" />
+        <ListView x:Name="listFuzzyLabels" BorderBrush="Black"  Grid.Column="1" Grid.Row="3" Grid.RowSpan="4" Grid.ColumnSpan="2" Margin="15,10,15,10" SelectionChanged="ListFuzzyLabels_SelectionChanged" />
 
         <TextBlock Grid.Row="3" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5">Название:</TextBlock>
         <TextBlock Grid.Row="4" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5">Тип:</TextBlock>

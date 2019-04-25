@@ -69,7 +69,14 @@ namespace ExpertSystem
             {
                 if (var != null)
                 {
-                    inferenceSystem.NewRule(var.Name, var.Value);
+                    try
+                    {
+                        inferenceSystem.NewRule(var.Name, var.Value);
+                    }
+                    catch
+                    {
+                        
+                    }
                 }
             }
         }
