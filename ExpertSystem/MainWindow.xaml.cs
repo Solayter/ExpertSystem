@@ -29,6 +29,7 @@ namespace ExpertSystem
         {
             InitializeComponent();
             logics = new Logic();
+            
             listVariables.ItemsSource = logics.GetVariablesList();
             listRules.ItemsSource = logics.GetRulesList();
         }
@@ -98,7 +99,15 @@ namespace ExpertSystem
 
         private void BtnAddRule_Click(object sender, RoutedEventArgs e)
         {
-
+            WindowAddRule windowAddRule = new WindowAddRule(logics.GetVariables());
+            if (windowAddRule.ShowDialog() != true)
+            {
+                if (windowAddRule.ok)
+                {
+                    logics.AddRule(windowAddRule.name, windowAddRule.value);
+                    listRules.ItemsSource = logics.GetRulesList();
+                }
+            }
         }
 
         private void ListRules_SelectionChanged(object sender, SelectionChangedEventArgs e)

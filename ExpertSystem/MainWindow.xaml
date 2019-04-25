@@ -48,14 +48,15 @@
                     </Grid.RowDefinitions>
 
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="118*"/>
+                        <ColumnDefinition Width="118*"/>
+                        <ColumnDefinition Width="118*"/>
+                        <ColumnDefinition Width="118*"/>
+                        <ColumnDefinition Width="118*"/>
+                        <ColumnDefinition Width="119*"/>
+                        <ColumnDefinition Width="118*"/>
+                        <ColumnDefinition Width="28*"/>
+                        <ColumnDefinition Width="91*"/>
                     </Grid.ColumnDefinitions>
 
                     <ListView x:Name="listVariables" BorderBrush="Black"  Grid.Column="0" Grid.RowSpan="13" Grid.ColumnSpan="2" Margin="15,10,15,10" SelectionChanged="ListVariables_SelectionChanged">
@@ -64,25 +65,25 @@
 
                     <Button x:Name="btnAddVariable" Grid.Row="13" Grid.Column="0" Grid.ColumnSpan="2" Margin="15,0,15,10" Click="BtnAddVariable_Click">Добавить переменную</Button>
                     <Button x:Name="btnUpdateVariable" Grid.Row="13" Grid.Column="3" Grid.ColumnSpan="2" Margin="15,0,15,10" Click="BtnUpdateVariable_Click">Изменить переменную</Button>
-                    <Button x:Name="btnDeleteVariable" Grid.Row="13" Grid.Column="6" Grid.ColumnSpan="2" Margin="15,0,15,10" Click="BtnDeleteVariable_Click">Удалить переменную</Button>
+                    <Button x:Name="btnDeleteVariable" Grid.Row="13" Grid.Column="6" Grid.ColumnSpan="3" Margin="15,0,15,10" Click="BtnDeleteVariable_Click">Удалить переменную</Button>
 
-                    <TextBlock Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5">Название:</TextBlock>
-                    <TextBlock Name="textBlockVariableName" Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="5">-</TextBlock>
+                    <TextBlock Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,9,4,9">Название:</TextBlock>
+                    <TextBox IsReadOnly="True" Width="216" Name="textBlockVariableName" Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="5,8,0,8" Background="#FFE6E6E6"></TextBox>
 
-                    <TextBlock Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5">Минимум:</TextBlock>
-                    <TextBlock Name="textBlockVariableMin" Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="5">-</TextBlock>
+                    <TextBlock Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,9,4,9">Минимум:</TextBlock>
+                    <TextBox IsReadOnly="True" Width="216" Name="textBlockVariableMin" Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="5,8,0,8" Background="#FFE6E6E6"></TextBox>
 
-                    <TextBlock Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5">Максимум:</TextBlock>
-                    <TextBlock Name="textBlockVariableMax" Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="5">-</TextBlock>
+                    <TextBlock Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,9,5,9">Максимум:</TextBlock>
+                    <TextBox IsReadOnly="True" Width="216" Name="textBlockVariableMax" Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="5,8,0,8" Background="#FFE6E6E6"></TextBox>
 
-                    <TextBlock Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5">Термы:</TextBlock>
+                    <TextBlock Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,9,5,9">Термы:</TextBlock>
                     <ListView x:Name="listFuzzyLabels" BorderBrush="Black"  Grid.Column="3" Grid.Row="3" Grid.RowSpan="5" Grid.ColumnSpan="2" Margin="15,10,15,10" SelectionChanged="ListFuzzyLabels_SelectionChanged"/>
 
-                    <TextBlock Grid.Row="3" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5">Название:</TextBlock>
-                    <TextBlock Grid.Row="4" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5">Тип:</TextBlock>
-                    <TextBlock Grid.Row="5" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5">Значения:</TextBlock>
-                    <TextBlock Name="textBlockLabelName" Grid.Row="3" Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="5">-</TextBlock>
-                    <TextBlock Name="textBlockLabelType" Grid.Row="4" Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="5">-</TextBlock>
+                    <TextBlock Grid.Row="3" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,9,4,9">Название:</TextBlock>
+                    <TextBlock Grid.Row="4" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,9,5,9">Тип:</TextBlock>
+                    <TextBlock Grid.Row="5" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,9,4,9">Значения:</TextBlock>
+                    <TextBox IsReadOnly="True" Width="99" Name="textBlockLabelName" Grid.Row="3" Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,9,0,9" Background="#FFE6E6E6"></TextBox>
+                    <TextBox IsReadOnly="True" Width="99" Name="textBlockLabelType" Grid.Row="4" Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,9,0,9" Background="#FFE6E6E6"></TextBox>
                     <ListView x:Name="listLabelsItems" BorderBrush="Black"  Grid.Column="6" Grid.Row="5" Grid.RowSpan="3" Grid.ColumnSpan="1" Margin="15,10,15,10"/>
 
 
@@ -125,10 +126,10 @@
                     <Button x:Name="btnDeleteRule" Grid.Row="13" Grid.Column="6" Grid.ColumnSpan="2" Margin="15,0,15,10">Удалить правило</Button>
 
                     <TextBlock Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5">Название:</TextBlock>
-                    <TextBlock Name="textBlockRuleName" Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="3" Margin="5">-</TextBlock>
+                    <TextBox IsReadOnly="True" Width="345" Name="textBlockRuleName" Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="3" Margin="5" Background="#FFE6E6E6"></TextBox>
 
                     <TextBlock Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5">Значение:</TextBlock>
-                    <TextBlock Name="textBlockRuleValue" Grid.Row="1" Grid.Column="3" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.ColumnSpan="4" Grid.RowSpan="6" Margin="5,10" FontWeight="Bold" >-</TextBlock>
+                    <TextBox IsReadOnly="True" Width="460" Height="203" Name="textBlockRuleValue" Grid.Row="1" Grid.Column="3" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.ColumnSpan="4" Grid.RowSpan="6" Margin="5,10" FontWeight="Bold" Background="#FFE6E6E6" ></TextBox>
 
                 </Grid>
 

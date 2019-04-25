@@ -57,6 +57,11 @@ namespace ExpertSystem
             return informationBase.GetVariable(name);
         }
 
+        public Variable[] GetVariables()
+        {
+            return informationBase.variables;
+        }
+
         public void AddRule(string name, string value)
         {
             informationBase.AddRule(name, value);

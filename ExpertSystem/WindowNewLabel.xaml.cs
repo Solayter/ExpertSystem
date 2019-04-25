@@ -126,9 +126,14 @@ namespace ExpertSystem
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
-            name = textBoxVariableName.Text;
-            foreach(string var in strings)
-            if(var == name)
+            name = textBoxVariableName.Text.Replace(' ','_');
+            if (textBoxVariableName.Text == "")
+            {
+                MessageBox.Show("Необходимо ввести название!");
+                return;
+            }
+            foreach (string var in strings)
+                if(var == name)
                 {
                     MessageBox.Show("Терм с таким именем уже существует!");
                     return;
@@ -152,7 +157,7 @@ namespace ExpertSystem
                             foreach(float var in array)
                                 if((var > max)|(var < min))
                                 {
-                                    MessageBox.Show("Значения терма не лолжны выходить за рамки значения переменной!");
+                                    MessageBox.Show("Значения терма не должны выходить за рамки значения переменной!");
                                     return;
                                 }
                             ok = true;
@@ -175,7 +180,7 @@ namespace ExpertSystem
                             foreach (float var in array)
                                 if ((var > max) | (var < min))
                                 {
-                                    MessageBox.Show("Значения терма не лолжны выходить за рамки значения переменной!");
+                                    MessageBox.Show("Значения терма не должны выходить за рамки значения переменной!");
                                     return;
                                 }
                             ok = true;
@@ -199,7 +204,7 @@ namespace ExpertSystem
                             foreach (float var in array)
                                 if ((var > max) | (var < min))
                                 {
-                                    MessageBox.Show("Значения терма не лолжны выходить за рамки значения переменной!");
+                                    MessageBox.Show("Значения терма не должны выходить за рамки значения переменной!");
                                     return;
                                 }
                             ok = true;
@@ -225,7 +230,7 @@ namespace ExpertSystem
                             foreach (float var in array)
                                 if ((var > max) | (var < min))
                                 {
-                                    MessageBox.Show("Значения терма не лолжны выходить за рамки значения переменной!");
+                                    MessageBox.Show("Значения терма не должны выходить за рамки значения переменной!");
                                     return;
                                 }
                             ok = true;
@@ -247,7 +252,7 @@ namespace ExpertSystem
                             foreach (float var in array)
                                 if ((var > max) | (var < min))
                                 {
-                                    MessageBox.Show("Значения терма не лолжны выходить за рамки значения переменной!");
+                                    MessageBox.Show("Значения терма не должны выходить за рамки значения переменной!");
                                     return;
                                 }
                             ok = true;

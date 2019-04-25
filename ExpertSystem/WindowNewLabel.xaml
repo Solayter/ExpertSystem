@@ -29,7 +29,7 @@
         <Button x:Name="btnCancel" Grid.Row="7" Grid.Column="2" Grid.ColumnSpan="2"  Margin="5" Click="BtnCancel_Click" >Отменить</Button>
 
         <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5">Название:</TextBlock>
-        <TextBox Name="textBoxVariableName" Width="236" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="5">Новый_терм</TextBox>
+        <TextBox Name="textBoxVariableName" Width="236" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="5"></TextBox>
 
         <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5">Тип:</TextBlock>
         <ComboBox Grid.Row="1" Grid.Column="1" Name="comboBoxType"  VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="5" SelectionChanged="ComboBoxType_SelectionChanged">

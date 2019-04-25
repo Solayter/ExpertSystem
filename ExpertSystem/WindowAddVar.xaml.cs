@@ -49,7 +49,14 @@ namespace ExpertSystem
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
-            name = textBoxVariableName.Text;
+            name = textBoxVariableName.Text.Replace(' ', '_');
+            if (textBoxVariableName.Text == "")
+            {
+                MessageBox.Show("Необходимо ввести название!");
+                return;
+            }
+
+
             if (name != oldName)
                 foreach (string str in variablesStrings)
                     if (str == name)
@@ -84,10 +91,12 @@ namespace ExpertSystem
 
         private void BtnNewLabel_Click(object sender, RoutedEventArgs e)
         {
+            float min;
+            float max;
             try
             {
-                float min = (float)Convert.ToDouble(textBoxVariableMin.Text);
-                float max = (float)Convert.ToDouble(textBoxVariableMax.Text);
+                min = (float)Convert.ToDouble(textBoxVariableMin.Text);
+                max = (float)Convert.ToDouble(textBoxVariableMax.Text);
             }
             catch
             {

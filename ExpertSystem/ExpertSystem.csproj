@@ -71,6 +71,9 @@
     <Compile Include="FuzzyLabel.cs" />
     <Compile Include="Rule.cs" />
     <Compile Include="Variable.cs" />
+    <Compile Include="WindowAddRule.xaml.cs">
+      <DependentUpon>WindowAddRule.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WindowAddVar.xaml.cs">
       <DependentUpon>WindowAddVar.xaml</DependentUpon>
     </Compile>
@@ -85,13 +88,16 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Class1.cs" />
     <Compile Include="InformationBase.cs" />
     <Compile Include="Logic.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="WindowAddRule.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="WindowAddVar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
