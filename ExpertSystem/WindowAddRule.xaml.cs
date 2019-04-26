@@ -31,6 +31,27 @@ namespace ExpertSystem
             this.variables = variables;
             listVars.ItemsSource = FindAllStrings();
         }
+
+        public WindowAddRule(Variable[] variables, string name, string value)
+        {
+            InitializeComponent();
+            this.variables = variables;
+            listVars.ItemsSource = FindAllStrings();
+            textBoxName.Text = name;
+            textBoxRule.Text = value;
+
+            btnAddLabel.IsEnabled = false;
+            btnAddNoLabel.IsEnabled = false;
+            btnAddVar.IsEnabled = false;
+            btnAddNoVar.IsEnabled = false;
+
+            btnAnd.IsEnabled = false;
+            btnOr.IsEnabled = false;
+            btnLeftBrack.IsEnabled = false;
+            btnRightBrack.IsEnabled = false;
+            btnThen.IsEnabled = false;
+            finalize = true;
+        }
         private string[] FindAllStrings()
         {
             string[] strings = new string[variables.Length];

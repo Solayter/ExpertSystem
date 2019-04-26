@@ -52,6 +52,7 @@ namespace ExpertSystem
             selectedVars.Clear();
             comboBoxFind.ItemsSource = logics.GetVariablesList();
         }
+
         private void BtnAddVariable_Click(object sender, RoutedEventArgs e)
         {
             WindowAddVar windowAddVar = new WindowAddVar(logics.GetVariablesList());
@@ -68,19 +69,26 @@ namespace ExpertSystem
 
         private void ListVariables_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (listVariables.SelectedItem != null)
+            try
             {
-                selectedVar = logics.GetVariable(listVariables.SelectedItem.ToString());
-
-                if (selectedVar != null)
+                if (listVariables.SelectedItem != null)
                 {
-                    textBlockVariableName.Text = selectedVar.Name;
-                    textBlockVariableMin.Text = selectedVar.Min.ToString();
-                    textBlockVariableMax.Text = selectedVar.Max.ToString();
-                    textBoxVarUnit.Text = selectedVar.Units;
+                    selectedVar = logics.GetVariable(listVariables.SelectedItem.ToString());
 
-                    listFuzzyLabels.ItemsSource = selectedVar.GetLabelsList();
+                    if (selectedVar != null)
+                    {
+                        textBlockVariableName.Text = selectedVar.Name;
+                        textBlockVariableMin.Text = selectedVar.Min.ToString();
+                        textBlockVariableMax.Text = selectedVar.Max.ToString();
+                        textBoxVarUnit.Text = selectedVar.Units;
+
+                        listFuzzyLabels.ItemsSource = selectedVar.GetLabelsList();
+                    }
                 }
+            }
+            catch
+            {
+
             }
         }
 
@@ -132,10 +140,20 @@ namespace ExpertSystem
 
         private void ListRules_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            selectedRule = logics.GetRule(listRules.SelectedItem.ToString());
-            textBlockRuleValue.TextWrapping = TextWrapping.Wrap;
-            textBlockRuleValue.Text = selectedRule.Value;
-            textBlockRuleName.Text = selectedRule.Name;
+            try
+            {
+                if (listRules.SelectedIndex != -1)
+                {
+                    selectedRule = logics.GetRule(listRules.SelectedItem.ToString());
+                    textBlockRuleValue.TextWrapping = TextWrapping.Wrap;
+                    textBlockRuleValue.Text = selectedRule.Value;
+                    textBlockRuleName.Text = selectedRule.Name;
+                }
+            }
+            catch
+            {
+
+            }
         }
         
         private void BtnDeleteVariable_Click(object sender, RoutedEventArgs e)
@@ -302,6 +320,33 @@ namespace ExpertSystem
                 UpdateVariables();
             }
 
+        }
+
+        private void BtnDeleteRule_Click(object sender, RoutedEventArgs e)
+        {
+            if (listRules.SelectedIndex != -1)
+                if (MessageBox.Show("Вы уверены что хотите удалить правило " + listRules.SelectedItem.ToString() + "?", "Удаление правила", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    logics.DeleteRule(listRules.SelectedItem.ToString());
+                    listRules.ItemsSource = logics.GetRulesList();
+                }
+        }
+
+        private void BtnUpdateRule_Click(object sender, RoutedEventArgs e)
+        {
+            WindowAddRule windowAddRule = new WindowAddRule(logics.GetVariables(), textBlockRuleName.Text, textBlockRuleValue.Text);
+            if (windowAddRule.ShowDialog() != true)
+            {
+                if (windowAddRule.ok)
+                {
+                    if (MessageBox.Show("Вы уверены что хотите изменить правило " + listRules.SelectedItem.ToString() + "?", "Изменение правила", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    {
+                        logics.DeleteRule(listRules.SelectedItem.ToString());
+                        logics.AddRule(windowAddRule.name, windowAddRule.value);
+                        listRules.ItemsSource = logics.GetRulesList();
+                    }
+                }
+            }
         }
     }
 }

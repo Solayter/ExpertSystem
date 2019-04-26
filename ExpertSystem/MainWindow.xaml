@@ -125,8 +125,8 @@
 
                     <ListView x:Name="listRules" BorderBrush="Black"  Grid.Column="0" Grid.RowSpan="13" Grid.ColumnSpan="2" Margin="15,10,15,10" SelectionChanged="ListRules_SelectionChanged"/>
                     <Button x:Name="btnAddRule" Grid.Row="13" Grid.Column="0" Grid.ColumnSpan="2" Margin="15,0,15,10" Click="BtnAddRule_Click">Добавить правило</Button>
-                    <Button x:Name="btnUpdateRule" Grid.Row="13" Grid.Column="3" Grid.ColumnSpan="2" Margin="15,0,15,10">Изменить правило</Button>
-                    <Button x:Name="btnDeleteRule" Grid.Row="13" Grid.Column="6" Grid.ColumnSpan="2" Margin="15,0,15,10">Удалить правило</Button>
+                    <Button x:Name="btnUpdateRule" Grid.Row="13" Grid.Column="3" Grid.ColumnSpan="2" Margin="15,0,15,10" Click="BtnUpdateRule_Click">Изменить правило</Button>
+                    <Button x:Name="btnDeleteRule" Grid.Row="13" Grid.Column="6" Grid.ColumnSpan="2" Margin="15,0,15,10" Click="BtnDeleteRule_Click">Удалить правило</Button>
 
                     <TextBlock Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5">Название:</TextBlock>
                     <TextBox IsReadOnly="True" Width="345" Name="textBlockRuleName" Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="3" Margin="5" Background="#FFE6E6E6"></TextBox>
