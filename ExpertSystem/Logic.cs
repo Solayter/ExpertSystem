@@ -21,25 +21,37 @@ namespace ExpertSystem
             
         }
 
-        public string Calc(float f1, float f2, float f3)
+        public string[] Calculate(string[] varsNames, float[] varsValues, string findName)
         {
+            string[] rezult = new string[2];
             inferenceSystem = databaseCreator.Create(informationBase);
-            inferenceSystem.SetInput("Сорт", f1);
-            inferenceSystem.SetInput("Удобрений", f2);
-            inferenceSystem.SetInput("Осадков", f3);
-            return inferenceSystem.Evaluate("Урожайность").ToString();
+
+            for (int i = 0; i < varsNames.Length; i++)
+            {
+                inferenceSystem.SetInput(varsNames[i], varsValues[i]);
+            }
+            try
+            {
+                rezult[0] = inferenceSystem.Evaluate(findName).ToString();
+            }
+            catch(Exception ex)
+            {
+                rezult[1] = ex.Message;
+            }
+            return rezult;
         }
-        public string Calc2(float f1, float f2, float f3)
+
+        public List<string> GetListForGrid()
         {
-            inferenceSystem = databaseCreator.Create(informationBase);
-            inferenceSystem.SetInput("Возраст", f1);
-            inferenceSystem.SetInput("Стенокардия", f2);
-            inferenceSystem.SetInput("Пол", f3);
-            return inferenceSystem.Evaluate("Вероятность_ИБС").ToString();
+            List<string> list = new List<string>();
+            foreach (Variable var in informationBase.variables)
+                if(var != null)
+                    list.Add(var.Name + " | "+ var.Min + " — " + var.Max + " " + var.Units);
+            return list;
         }
-        public void AddVariable(string name, float min, float max, FuzzyLabel[] fuzzyLabels)
+        public void AddVariable(string name, float min, float max, FuzzyLabel[] fuzzyLabels, string units)
         {
-            informationBase.AddVariable(name, min, max, fuzzyLabels);
+            informationBase.AddVariable(name, min, max, fuzzyLabels, units);
         }
 
         public void DeleteVariable(string name)
@@ -86,10 +98,10 @@ namespace ExpertSystem
 
         public void AddTestData()
         {
-            informationBase.AddVariable("Сорт", 1, 3, new FuzzyLabel[] { new FuzzyLabel("Первый", 5, new float[] { 1 }), new FuzzyLabel("Второй", 5, new float[] { 2 }), new FuzzyLabel("Третий", 5, new float[] { 3 }) });
-            informationBase.AddVariable("Удобрений", 0, 100, new FuzzyLabel[] { new FuzzyLabel("Мало", 1, new float[] { 0, 100 }), new FuzzyLabel("Много", 2, new float[] { 0, 100 }) });
-            informationBase.AddVariable("Осадков", 0, 50, new FuzzyLabel[] { new FuzzyLabel("Мало", 1, new float[] { 0, 50 }), new FuzzyLabel("Много", 2, new float[] { 0, 50 }) });
-            informationBase.AddVariable("Урожайность", 100, 300, new FuzzyLabel[] { new FuzzyLabel("Низкая", 1, new float[] { 100, 300 }), new FuzzyLabel("Средняя", 3, new float[] { 100, 200, 300 }), new FuzzyLabel("Высокая", 2, new float[] { 100, 300 }) });
+            informationBase.AddVariable("Сорт", 1, 3, new FuzzyLabel[] { new FuzzyLabel("Первый", 5, new float[] { 1 }), new FuzzyLabel("Второй", 5, new float[] { 2 }), new FuzzyLabel("Третий", 5, new float[] { 3 }) }, "тип");
+            informationBase.AddVariable("Удобрений", 0, 100, new FuzzyLabel[] { new FuzzyLabel("Мало", 1, new float[] { 0, 100 }), new FuzzyLabel("Много", 2, new float[] { 0, 100 }) }, "ц");
+            informationBase.AddVariable("Осадков", 0, 50, new FuzzyLabel[] { new FuzzyLabel("Мало", 1, new float[] { 0, 50 }), new FuzzyLabel("Много", 2, new float[] { 0, 50 }) }, "мм");
+            informationBase.AddVariable("Урожайность", 100, 300, new FuzzyLabel[] { new FuzzyLabel("Низкая", 1, new float[] { 100, 300 }), new FuzzyLabel("Средняя", 3, new float[] { 100, 200, 300 }), new FuzzyLabel("Высокая", 2, new float[] { 100, 300 }) }, "т/га");
 
 
             informationBase.AddRule("Правило 1", "IF Сорт IS Первый AND Удобрений IS Много AND Осадков IS Много THEN Урожайность IS Высокая");
@@ -103,24 +115,24 @@ namespace ExpertSystem
                 new FuzzyLabel("30-39", 3, new float[] { 29, 35, 40}),
                 new FuzzyLabel("40-49", 3, new float[] { 39, 45, 50}),
                 new FuzzyLabel("50-59", 3, new float[] { 49, 55, 60}),
-                new FuzzyLabel("60-69", 3, new float[] { 59, 65, 70}) });
+                new FuzzyLabel("60-69", 3, new float[] { 59, 65, 70}) },"лет");
 
 
             informationBase.AddVariable("Стенокардия", 1, 4, new FuzzyLabel[] {
                 new FuzzyLabel("Типичная_стенокардия", 5, new float[] { 1 }),
                 new FuzzyLabel("Атипичная_стенокардия", 5, new float[] { 2 }),
                 new FuzzyLabel("Нестенокардическая_боль", 5, new float[] { 3 }),
-                new FuzzyLabel("Нет_боли", 5, new float[] { 4 }) });
+                new FuzzyLabel("Нет_боли", 5, new float[] { 4 }) },"тип");
 
             informationBase.AddVariable("Пол", 1, 2, new FuzzyLabel[] {
                 new FuzzyLabel("Мужской", 5, new float[] { 1 }),
-                new FuzzyLabel("Женский", 5, new float[] { 2 }) });
+                new FuzzyLabel("Женский", 5, new float[] { 2 }) },"тип");
             
             informationBase.AddVariable("Вероятность_ИБС", 0, 100, new FuzzyLabel[] {
                 new FuzzyLabel("Очень_низкая", 1, new float[] { 0, 5}),
                 new FuzzyLabel("Низкая", 3, new float[] { 5, 7.5f, 10}),
                 new FuzzyLabel("Средняя", 3, new float[] { 10, 50, 90}),
-                new FuzzyLabel("Высокая", 2, new float[] { 90, 100}) });
+                new FuzzyLabel("Высокая", 2, new float[] { 90, 100}) },"%");
 
             informationBase.AddRule("Правило 6", "IF Возраст IS 30-39 AND Стенокардия IS Типичная_стенокардия AND Пол IS Мужской THEN Вероятность_ИБС IS Средняя");
             informationBase.AddRule("Правило 35", "IF Возраст IS 30-39 AND Стенокардия IS Типичная_стенокардия AND Пол IS Женский THEN Вероятность_ИБС IS Средняя");

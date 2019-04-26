@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ExpertSystem"
         mc:Ignorable="d"
-        Title="Экспертная система" Height="600" Width="960" MinHeight="600" MinWidth="960" FontSize="14" Background="#FF404040">
+        Title="Экспертная система" Height="605" Width="965" MinHeight="605" MinWidth="965" FontSize="14" Background="#FF404040">
 
     <Grid Background="#FFA0A0A0">
         <Grid.RowDefinitions>
@@ -21,7 +21,7 @@
             </MenuItem>
 
         </Menu>
-        <TabControl Grid.Row="1" HorizontalAlignment="Left" Height="549" Margin="0,20,0,0" VerticalAlignment="Top" Width="952" Background="#FFCBCBCB" >
+        <TabControl Grid.Row="1" HorizontalAlignment="Left" Height="549" Margin="0,20,0,0" VerticalAlignment="Top" Width="952" Background="#FFCBCBCB" SelectionChanged="TabControl_SelectionChanged" >
             <TabItem Header="Переменные">
                 <TabItem.Background>
                     <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
@@ -86,6 +86,9 @@
                     <TextBox IsReadOnly="True" Width="99" Name="textBlockLabelType" Grid.Row="4" Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,9,0,9" Background="#FFE6E6E6"></TextBox>
                     <ListView x:Name="listLabelsItems" BorderBrush="Black"  Grid.Column="6" Grid.Row="5" Grid.RowSpan="3" Grid.ColumnSpan="1" Margin="15,10,15,10"/>
 
+                    <TextBlock Grid.Row="0" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,9,4,9">Ед. измерения:</TextBlock>
+                    <TextBox IsReadOnly="True" Width="99" Name="textBoxVarUnit" Grid.Row="0" Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,9,0,9" Background="#FFE6E6E6"></TextBox>
+
 
                 </Grid>
 
@@ -134,9 +137,17 @@
                 </Grid>
 
             </TabItem>
-            <TabItem Header="Отчет 1">
+            
+            <TabItem Header="Рассчет">
                 <Grid >
                     <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
@@ -147,49 +158,42 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5">Сорт (1,2,3):</TextBlock>
-                    <TextBox Name="textBoxInput1" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="1" Margin="5" Width="120">1</TextBox>
-                    <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5">Удобрений (0 - 100):</TextBlock>
-                    <TextBox Name="textBoxInput2" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="1" Margin="5" Width="120">1</TextBox>
-                    <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5">Осадков (0 - 50):</TextBlock>
-                    <TextBox Name="textBoxInput3" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="1" Margin="5" Width="120">1</TextBox>
-                    <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5">Урожайность (100 - 300):</TextBlock>
-                    <TextBlock Name="textBlockOutput" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5"></TextBlock>
-                    <Button x:Name="btnCalc" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="350,30,350,30" Click="BtnCalc_Click">Рассчитать</Button>
-
-
-                </Grid>
-
-            </TabItem>
-
-            <TabItem Header="Отчет 2">
-                <Grid >
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-
-                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
+                    
+                    <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"  Grid.ColumnSpan="4" HorizontalAlignment="Center" Margin="5">Все переменные:</TextBlock>
+                    <ListView x:Name="listVarAll" BorderBrush="Black"  Grid.Row="1" Grid.Column="0" Grid.RowSpan="9" Grid.ColumnSpan="4" Margin="5" >
+                    </ListView>
+                    <TextBlock Grid.Row="10" Grid.Column="0" VerticalAlignment="Center"  Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="5">Значение переменной:</TextBlock>
+                    <TextBox Name="textBoxVarInput" Grid.Row="10" Grid.Column="2"   Grid.ColumnSpan="2" Margin="5,9,5,9"></TextBox>
 
-                    <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5">Возраст (30-69):</TextBlock>
-                    <TextBox Name="textBoxInput11" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="1" Margin="5" Width="120">31</TextBox>
-                    <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,26,9,15" Height="63" Width="380" RenderTransformOrigin="0.5,0.5">
-                    <Run Text="Стенокардия (1 - типичная,"/><LineBreak/><Run Text=" 2 - атипичная, 3 - нестенакардическая боль, 4 - нет боли):"/></TextBlock>
-                    <TextBox TextWrapping="Wrap" Name="textBoxInput22" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="1" Margin="5" Width="120">1</TextBox>
-                    <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5">Пол (1 - мужской, 2 - женский):</TextBlock>
-                    <TextBox Name="textBoxInput33" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="1" Margin="5" Width="120">1</TextBox>
-                    <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5">Вероятность ИБС:</TextBlock>
-                    <TextBlock Name="textBlockOutput1" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5"></TextBlock>
-                    <Button x:Name="btnCalc1" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="350,30,350,30" Click="BtnCalc1_Click">Рассчитать</Button>
+                    <Button Name="btnChoose" Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="4" Margin="5" Click="BtnChoose_Click">Добавить переменную ▶ ▶ ▶</Button>
 
+                    
+                    <TextBlock Grid.Row="0" Grid.Column="4" VerticalAlignment="Center"  Grid.ColumnSpan="4" HorizontalAlignment="Center" Margin="5">Выбранные переменные:</TextBlock>
+                    <ListView x:Name="listVarSelected" BorderBrush="Black"  Grid.Row="1" Grid.Column="4" Grid.RowSpan="10" Grid.ColumnSpan="4" Margin="5" >
+                    </ListView>
+                    <Button Name="btnReturn" Grid.Row="11" Grid.Column="4" Grid.ColumnSpan="4" Margin="5" Click="BtnReturn_Click">Очистить</Button>
+
+                    <TextBlock Grid.Row="0" Grid.Column="8" VerticalAlignment="Center"  Grid.ColumnSpan="4" HorizontalAlignment="Center" Margin="5">Искомая переменная:</TextBlock>
+                    <ComboBox Grid.Row="1" Grid.Column="8" Name="comboBoxFind"  VerticalAlignment="Center" Grid.ColumnSpan="4" Margin="5" SelectionChanged="ComboBoxFind_SelectionChanged">
+                    </ComboBox>
+                    <TextBlock Grid.Row="2" Grid.Column="8" VerticalAlignment="Center"  Grid.ColumnSpan="4" HorizontalAlignment="Center" Margin="5">Интервал переменной:</TextBlock>
+                    <TextBox IsReadOnly="True" Name="textBoxInterval" Grid.Row="3" Grid.Column="8"   Grid.ColumnSpan="4" Margin="5,9,5,9" Background="#FFE6E6E6" ></TextBox>
+
+                    <TextBlock Grid.Row="4" Grid.Column="8" VerticalAlignment="Center"  Grid.ColumnSpan="4" HorizontalAlignment="Center" Margin="5">Результат:</TextBlock>
+                    <TextBox IsReadOnly="True" Name="textBoxRezult" Grid.Row="5" Grid.Column="8"   Grid.ColumnSpan="3" Margin="5,9,5,9" Background="#FFE6E6E6" ></TextBox>
+                    <TextBox IsReadOnly="True" Name="textBoxRezultUnit" Grid.Row="5" Grid.Column="11"   Grid.ColumnSpan="1" Margin="5,9,5,9" Background="#FFE6E6E6" ></TextBox>
+                    <Button Name="btnRezult" Grid.Row="6" Grid.Column="8" Grid.ColumnSpan="4" Margin="5" Click="BtnRezult_Click">Рассчитать</Button>
 
                 </Grid>
 

@@ -12,13 +12,15 @@ namespace ExpertSystem
         public float Min { get; set; }
         public float Max { get; set; }
         public FuzzyLabel[] FuzzyLabels { get; set; }
+        public string Units { get; set; }
 
-        public Variable(string name, float min, float max, FuzzyLabel[] fuzzyLabels)
+        public Variable(string name, float min, float max, FuzzyLabel[] fuzzyLabels, string units)
         {
             Name = name;
             Min = min;
             Max = max;
             FuzzyLabels = fuzzyLabels;
+            Units = units;
         }
 
         public string[] GetLabelsList()

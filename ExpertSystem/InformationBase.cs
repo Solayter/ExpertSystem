@@ -16,9 +16,9 @@ namespace ExpertSystem
             variables = new Variable[1];
             rules = new Rule[1];
         }
-        public void AddVariable(string name, float min, float max, FuzzyLabel[] fuzzyLabels)
+        public void AddVariable(string name, float min, float max, FuzzyLabel[] fuzzyLabels, string units)
         {
-            variables[variables.Length - 1] = new Variable(name, min, max, fuzzyLabels);
+            variables[variables.Length - 1] = new Variable(name, min, max, fuzzyLabels, units);
             Array.Resize(ref variables, variables.Length + 1);
         }
         public void AddRule(string name, string value)

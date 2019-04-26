@@ -39,6 +39,9 @@
         <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5">Название:</TextBlock>
         <TextBox Name="textBoxVariableName" Width="190" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="5"></TextBox>
 
+        <TextBlock Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5">Ед. измерения:</TextBlock>
+        <TextBox Name="textBoxVariableUnits" Grid.Row="0" Grid.Column="4" Margin="10"></TextBox>
+
         <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5">Минимум:</TextBlock>
         <TextBox Name="textBoxVariableMin" Width="190" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="5"></TextBox>
 

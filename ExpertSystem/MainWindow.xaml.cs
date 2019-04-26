@@ -24,17 +24,32 @@ namespace ExpertSystem
         Logic logics;
         Variable selectedVar;
         Rule selectedRule;
-        
+        Variable selectedVarFind;
+        List<string> selectedVars;
+        List<string> allVars;
         public MainWindow()
         {
             InitializeComponent();
             logics = new Logic();
-            
+            selectedVars = new List<string>();
+            allVars = new List<string>();
+
             listVariables.ItemsSource = logics.GetVariablesList();
             listRules.ItemsSource = logics.GetRulesList();
+
+            UpdateVariables();
         }
 
 
+        private void UpdateVariables()
+        {
+            allVars = logics.GetListForGrid();
+            listVarAll.ItemsSource = null;
+            listVarAll.ItemsSource = allVars;
+            listVarSelected.ItemsSource = null;
+            selectedVars.Clear();
+            comboBoxFind.ItemsSource = logics.GetVariablesList();
+        }
         private void BtnAddVariable_Click(object sender, RoutedEventArgs e)
         {
             WindowAddVar windowAddVar = new WindowAddVar(logics.GetVariablesList());
@@ -42,8 +57,9 @@ namespace ExpertSystem
             {
                 if (windowAddVar.ok)
                 {
-                    logics.AddVariable(windowAddVar.name, windowAddVar.min, windowAddVar.max, windowAddVar.fuzzyLabels.ToArray());
+                    logics.AddVariable(windowAddVar.name, windowAddVar.min, windowAddVar.max, windowAddVar.fuzzyLabels.ToArray(),windowAddVar.units);
                     listVariables.ItemsSource = logics.GetVariablesList();
+                    UpdateVariables();
                 }
             }
         }
@@ -59,6 +75,8 @@ namespace ExpertSystem
                     textBlockVariableName.Text = selectedVar.Name;
                     textBlockVariableMin.Text = selectedVar.Min.ToString();
                     textBlockVariableMax.Text = selectedVar.Max.ToString();
+                    textBoxVarUnit.Text = selectedVar.Units;
+
                     listFuzzyLabels.ItemsSource = selectedVar.GetLabelsList();
                 }
             }
@@ -117,17 +135,7 @@ namespace ExpertSystem
             textBlockRuleValue.Text = selectedRule.Value;
             textBlockRuleName.Text = selectedRule.Name;
         }
-
-        private void BtnCalc_Click(object sender, RoutedEventArgs e)
-        {
-            textBlockOutput.Text = logics.Calc(Convert.ToInt32(textBoxInput1.Text), Convert.ToInt32(textBoxInput2.Text), Convert.ToInt32(textBoxInput3.Text));
-        }
-
-        private void BtnCalc1_Click(object sender, RoutedEventArgs e)
-        {
-            textBlockOutput1.Text = logics.Calc2(Convert.ToInt32(textBoxInput11.Text), Convert.ToInt32(textBoxInput22.Text), Convert.ToInt32(textBoxInput33.Text));
-        }
-
+        
         private void BtnDeleteVariable_Click(object sender, RoutedEventArgs e)
         {
             if (listVariables.SelectedIndex != -1)
@@ -135,6 +143,7 @@ namespace ExpertSystem
                 {
                     logics.DeleteVariable(listVariables.SelectedItem.ToString());
                     listVariables.ItemsSource = logics.GetVariablesList();
+                    UpdateVariables();
                 }
         }
 
@@ -148,10 +157,87 @@ namespace ExpertSystem
                     if (MessageBox.Show("Вы уверены что хотите изменить переменную " + listVariables.SelectedItem.ToString() + "?", "Изменение переменной", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     {
                         logics.DeleteVariable(listVariables.SelectedItem.ToString());
-                        logics.AddVariable(windowAddVar.name, windowAddVar.min, windowAddVar.max, windowAddVar.fuzzyLabels.ToArray());
+                        logics.AddVariable(windowAddVar.name, windowAddVar.min, windowAddVar.max, windowAddVar.fuzzyLabels.ToArray(),windowAddVar.units);
                         listVariables.ItemsSource = logics.GetVariablesList();
+                        UpdateVariables();
                     }
                 }
+            }
+        }
+
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            
+        }
+
+        private void BtnChoose_Click(object sender, RoutedEventArgs e)
+        {
+            if (listVarAll.SelectedIndex != -1)
+            {
+                float input;
+                float min = (float)Convert.ToDouble(listVarAll.SelectedItem.ToString().Split(' ')[2]);
+                float max = (float)Convert.ToDouble(listVarAll.SelectedItem.ToString().Split(' ')[4]);
+                try
+                {
+                    input = (float)Convert.ToDouble(textBoxVarInput.Text);
+                }
+                catch
+                {
+                    MessageBox.Show("Значение переменной должны быть целым или дробным числом!");
+                    return;
+                }
+                if((input > max)|(input < min))
+                {
+                    MessageBox.Show("Значение переменной не должно выходить за интервалы!");
+                    return;
+                }
+                string sel = listVarAll.SelectedItem.ToString().Split(' ')[0] + " " + input.ToString();
+                if (!selectedVars.Contains(sel))
+                    selectedVars.Add(sel);
+                listVarSelected.ItemsSource = null;
+                listVarSelected.ItemsSource = selectedVars;
+
+                allVars.Remove(listVarAll.SelectedItem.ToString());
+                listVarAll.ItemsSource = null;
+                listVarAll.ItemsSource = allVars;
+            }
+        }
+
+        private void BtnReturn_Click(object sender, RoutedEventArgs e)
+        {
+            listVarAll.ItemsSource = null;
+            listVarAll.ItemsSource = allVars = logics.GetListForGrid();
+            listVarSelected.ItemsSource = null;
+            selectedVars.Clear();
+        }
+
+        private void ComboBoxFind_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (comboBoxFind.SelectedIndex != -1)
+            {
+                selectedVarFind = logics.GetVariable(comboBoxFind.SelectedItem.ToString());
+                textBoxInterval.Text = selectedVarFind.Min + " — " + selectedVarFind.Max + " " + selectedVarFind.Units;
+                textBoxRezultUnit.Text = selectedVarFind.Units;
+            }
+        }
+
+        private void BtnRezult_Click(object sender, RoutedEventArgs e)
+        {
+            List<string> names = new List<string>();
+            List<float> values = new List<float>();
+            string[] rezult = new string[2];
+            if (comboBoxFind.SelectedIndex != -1)
+            {
+                foreach (string str in selectedVars)
+                {
+                    names.Add(str.Split(' ')[0]);
+                    values.Add((float)Convert.ToDouble(str.Split(' ')[1]));
+                }
+                rezult = logics.Calculate(names.ToArray(), values.ToArray(), comboBoxFind.SelectedItem.ToString());
+                if (rezult[0] != null)
+                    textBoxRezult.Text = rezult[0];
+                else
+                    MessageBox.Show("Недостаточно информации для проведения этого рассчета. Необходимо добавить больше правил!");
             }
         }
     }

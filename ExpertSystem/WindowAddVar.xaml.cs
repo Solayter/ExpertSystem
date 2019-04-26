@@ -23,6 +23,7 @@ namespace ExpertSystem
         public float min;
         public float max;
         public bool ok;
+        public string units;
         public List<FuzzyLabel> fuzzyLabels;
         string[] variablesStrings;
         string oldName;
@@ -50,6 +51,7 @@ namespace ExpertSystem
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
             name = textBoxVariableName.Text.Replace(' ', '_');
+            units = textBoxVariableUnits.Text;
             if (textBoxVariableName.Text == "")
             {
                 MessageBox.Show("Необходимо ввести название!");
