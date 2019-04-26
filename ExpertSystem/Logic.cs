@@ -41,6 +41,16 @@ namespace ExpertSystem
             return rezult;
         }
 
+        public void OpenFile(string file)
+        {
+            informationBase = JsonConvert.DeserializeObject<InformationBase>(file);
+        }
+
+        public string SaveFile()
+        {
+            return JsonConvert.SerializeObject(informationBase);
+        }
+
         public List<string> GetListForGrid()
         {
             List<string> list = new List<string>();

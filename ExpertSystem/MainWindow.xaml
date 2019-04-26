@@ -13,11 +13,11 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Menu VerticalAlignment="Top" Grid.Row="0" Height="20
-              " Grid.RowSpan="2" FontSize="14" Background="#FF838383">
+              " Grid.RowSpan="2" FontSize="14" Background="#FF919191">
             <MenuItem Header="Файл">
-                <MenuItem Header="Открыть" ></MenuItem>
-                <MenuItem Header="Сохранить" ></MenuItem>
-                <MenuItem Header="Сохранить как" ></MenuItem>
+                <MenuItem x:Name="Open" Header="Открыть" Click="Open_Click" ></MenuItem>
+                <MenuItem x:Name="Save" Header="Сохранить" Click="Save_Click" ></MenuItem>
+                <MenuItem x:Name="SaveAs" Header="Сохранить как" Click="SaveAs_Click" />
             </MenuItem>
 
         </Menu>

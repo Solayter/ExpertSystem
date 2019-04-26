@@ -12,7 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.IO;
 using AForge.Fuzzy;
+using Microsoft.Win32;
 
 namespace ExpertSystem
 {
@@ -27,6 +29,7 @@ namespace ExpertSystem
         Variable selectedVarFind;
         List<string> selectedVars;
         List<string> allVars;
+        string fileName = "";
         public MainWindow()
         {
             InitializeComponent();
@@ -36,7 +39,6 @@ namespace ExpertSystem
 
             listVariables.ItemsSource = logics.GetVariablesList();
             listRules.ItemsSource = logics.GetRulesList();
-
             UpdateVariables();
         }
 
@@ -200,6 +202,7 @@ namespace ExpertSystem
                 allVars.Remove(listVarAll.SelectedItem.ToString());
                 listVarAll.ItemsSource = null;
                 listVarAll.ItemsSource = allVars;
+                textBoxVarInput.Text = "";
             }
         }
 
@@ -239,6 +242,66 @@ namespace ExpertSystem
                 else
                     MessageBox.Show("Недостаточно информации для проведения этого рассчета. Необходимо добавить больше правил!");
             }
+        }
+
+        private void Open_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Title = "Открыть базу знаний...",
+                Filter = "Файлы экспертной системы|*.es|Все файлы|*.*"
+            };
+
+            if (openFileDialog.ShowDialog() != null)
+            {
+                FileStream fs = new FileStream(openFileDialog.FileName, FileMode.Open);
+                StreamReader sr = new StreamReader(fs);
+                logics.OpenFile(sr.ReadToEnd());
+                fileName = openFileDialog.FileName;
+                sr.Close();
+                fs.Close();
+                listVariables.ItemsSource = logics.GetVariablesList();
+                listRules.ItemsSource = logics.GetRulesList();
+                UpdateVariables();
+            }
+        }
+
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            if (fileName != "")
+            {
+                FileStream fs = new FileStream(fileName, FileMode.OpenOrCreate);
+                StreamWriter sw = new StreamWriter(fs);
+                sw.WriteLine(logics.SaveFile());
+                sw.Close();
+                fs.Close();
+                listVariables.ItemsSource = logics.GetVariablesList();
+                listRules.ItemsSource = logics.GetRulesList();
+                UpdateVariables();
+            }
+        }
+
+        private void SaveAs_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                Title = "Сохранить базу знаний...",
+                Filter = "Файлы экспертной системы|*.es|Все файлы|*.*"
+            };
+
+            if (saveFileDialog.ShowDialog() != null)
+            {
+                FileStream fs = new FileStream(saveFileDialog.FileName, FileMode.OpenOrCreate);
+                StreamWriter sw = new StreamWriter(fs);
+                sw.WriteLine(logics.SaveFile());
+                fileName = saveFileDialog.FileName;
+                sw.Close();
+                fs.Close();
+                listVariables.ItemsSource = logics.GetVariablesList();
+                listRules.ItemsSource = logics.GetRulesList();
+                UpdateVariables();
+            }
+
         }
     }
 }
